@@ -1,6 +1,6 @@
 import streamlit as st
-import cv2
 from ultralytics import YOLO
+from PIL import Image
 import numpy as np
 
 st.set_page_config(page_title="Deteksi Aksara", page_icon="🔍")
@@ -8,7 +8,7 @@ st.set_page_config(page_title="Deteksi Aksara", page_icon="🔍")
 # Load model YOLO (cache biar gak reload terus)
 @st.cache_resource
 def load_model():
-    return YOLO("best.pt")  # ganti path kalau beda
+    return YOLO("best.pt")  # pastikan file best.pt ada di repo
 
 model = load_model()
 
@@ -27,43 +27,33 @@ st.markdown("""
 
 mode = st.radio(
     "Pilih Mode Deteksi:",
-    ["📷 Kamera Real-time", "🖼️ Upload Gambar"]
+    ["📷 Ambil Foto Kamera", "🖼️ Upload Gambar"]
 )
 
-# MODE KAMERA
-if mode == "📷 Kamera Real-time":
-    st.info("📹 Mode Kamera Real-time aktif. Klik checkbox untuk menyalakan kamera.")
-    run = st.checkbox("▶️ Nyalakan Kamera", value=False)
+# --- MODE KAMERA (streamlit camera_input, bukan cv2.VideoCapture) ---
+if mode == "📷 Ambil Foto Kamera":
+    st.info("📹 Ambil foto dengan kamera HP/laptop, lalu sistem akan mendeteksi aksara.")
+    camera_file = st.camera_input("Aktifkan Kamera dan Ambil Foto")
 
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        FRAME_WINDOW = st.image([])
+    if camera_file is not None:
+        image = Image.open(camera_file).convert("RGB")
+        st.image(image, caption="📸 Foto dari kamera", use_column_width=True)
 
-    if run:
-        cap = cv2.VideoCapture(0)
-        while run:
-            ret, frame = cap.read()
-            if not ret:
-                st.error("⚠️ Kamera tidak terdeteksi.")
-                break
+        # Prediksi YOLO
+        results = model.predict(image, imgsz=640, conf=0.5)
+        res_plotted = results[0].plot()
+        st.image(res_plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
-            results = model.predict(frame, imgsz=640, conf=0.5)
-            annotated_frame = results[0].plot()
-
-            FRAME_WINDOW.image(annotated_frame, channels="BGR")
-        cap.release()
-
-# MODE UPLOAD GAMBAR
+# --- MODE UPLOAD GAMBAR ---
 elif mode == "🖼️ Upload Gambar":
     st.info("🖼️ Silakan upload gambar JPG/PNG untuk deteksi.")
     uploaded_file = st.file_uploader("📂 Pilih gambar", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
-        file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-        img = cv2.imdecode(file_bytes, 1)
+        image = Image.open(uploaded_file).convert("RGB")
+        st.image(image, caption="🖼️ Gambar yang diupload", use_column_width=True)
 
-        results = model.predict(img, imgsz=640, conf=0.5)
-        annotated_img = results[0].plot()
-
-
-        st.image(annotated_img, channels="BGR", caption="✅ Hasil Deteksi Aksara")
+        # Prediksi YOLO
+        results = model.predict(image, imgsz=640, conf=0.5)
+        res_plotted = results[0].plot()
+        st.image(res_plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
