@@ -1,7 +1,1 @@
-streamlit
-pandas
-numpy
-matplotlib
-seaborn
-plotly
-scikit-learn
+3.10
