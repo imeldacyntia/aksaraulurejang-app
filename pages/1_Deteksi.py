@@ -8,7 +8,7 @@ st.set_page_config(page_title="Deteksi Aksara", page_icon="🔍")
 # Load model YOLO (cache biar gak reload terus)
 @st.cache_resource
 def load_model():
-    return YOLO("C:/Users/ACER/OneDrive/Desktop/python/streamlit/best.pt")  # ganti path kalau beda
+    return YOLO("best.pt")  # ganti path kalau beda
 
 model = load_model()
 
@@ -64,5 +64,6 @@ elif mode == "🖼️ Upload Gambar":
 
         results = model.predict(img, imgsz=640, conf=0.5)
         annotated_img = results[0].plot()
+
 
         st.image(annotated_img, channels="BGR", caption="✅ Hasil Deteksi Aksara")
