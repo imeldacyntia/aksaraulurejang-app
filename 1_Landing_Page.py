@@ -14,8 +14,8 @@ Selamat datang di aplikasi **Deteksi Aksara Ulu Rejang** 👋
 Aplikasi ini dibuat untuk membantu mengenali dan mendeteksi aksara Ulu Rejang secara otomatis.  
 
 ### ✨ Fitur:
-- 📷 Deteksi real-time dengan kamera  
-- 🖼️ Deteksi dari gambar upload  
+- 📷 Deteksi citra secara langsung menggunakan kamera
+- 🖼️ Deteksi citra melalui unggahan gambar 
 """)
 
 # --- Tombol langsung ke halaman deteksi ---
@@ -41,3 +41,4 @@ Keberadaan aplikasi ini memiliki manfaat penting, yaitu:
 - 🌍 Berkontribusi pada **pelestarian kebudayaan** dengan memanfaatkan kecerdasan buatan untuk menjaga keberlanjutan aksara tradisional.  
 - 📚 Memberi nilai edukatif bagi generasi muda agar semakin peduli dan tertarik terhadap warisan budaya lokal.  
 """)
+
