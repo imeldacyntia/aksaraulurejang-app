@@ -7,3 +7,6 @@ plotly
 scikit-learn
 ultralytics
 opencv-python-headless
+pillow
+torch
+torchvision
