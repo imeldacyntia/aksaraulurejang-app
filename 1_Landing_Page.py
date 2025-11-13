@@ -9,9 +9,9 @@ st.set_page_config(
 st.markdown("<h1 style='text-align: center; color: #2E86C1;'>Deteksi Aksara Ulu Rejang</h1>", unsafe_allow_html=True)
 
 st.markdown("""
-Selamat datang di aplikasi **Deteksi Aksara Ulu Rejang** 👋  
+Selamat datang di aplikasi **Deteksi Gramfem Aksara Ulu Rejang** 👋  
 
-Aplikasi ini dibuat untuk membantu mengenali dan mendeteksi aksara Ulu Rejang secara otomatis.  
+Aplikasi ini dibuat untuk membantu mengenali dan mendeteksi grafem aksara Ulu Rejang secara otomatis.  
 
 ### ✨ Fitur:
 - 📷 Deteksi citra secara langsung menggunakan kamera
@@ -41,4 +41,5 @@ Keberadaan aplikasi ini memiliki manfaat penting, yaitu:
 - 🌍 Berkontribusi pada **pelestarian kebudayaan** dengan memanfaatkan kecerdasan buatan untuk menjaga keberlanjutan aksara tradisional.  
 - 📚 Memberi nilai edukatif bagi generasi muda agar semakin peduli dan tertarik terhadap warisan budaya lokal.  
 """)
+
 
