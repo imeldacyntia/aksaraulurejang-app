@@ -1,12 +1,9 @@
-streamlit==1.38.0
+streamlit
 pandas
 numpy
 matplotlib
 seaborn
 plotly
 scikit-learn
-torch
-torchvision
-pillow
-ultralytics==8.3.12
-opencv-python-headless==4.8.1.78
+ultralytics
+opencv-python-headless
