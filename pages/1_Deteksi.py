@@ -1,6 +1,7 @@
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
+import numpy as np
 import cv2
 
 st.set_page_config(page_title="Deteksi Aksara", page_icon="🔍")
@@ -10,15 +11,6 @@ def load_model():
     return YOLO("best.pt")
 
 model = load_model()
-
-# CSS untuk menyembunyikan preview kamera bawaan Streamlit
-st.markdown("""
-<style>
-[data-testid="stCameraInput"] img {
-    display: none !important;
-}
-</style>
-""", unsafe_allow_html=True)
 
 st.markdown(
     "<h2 style='color:#2E86C1; text-align:center;'>🔍 Mode Deteksi Aksara</h2>",
@@ -40,10 +32,14 @@ if mode == "📷 Ambil Foto Kamera":
     if camera_file is not None:
         image = Image.open(camera_file).convert("RGB")
 
+        # Prediksi YOLO
         results = model.predict(image, imgsz=640, conf=0.5)
         plotted = results[0].plot()
+
+        # Convert BGR → RGB agar warna benar
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
+        # Tampilkan berdampingan
         col1, col2 = st.columns(2)
         with col1:
             st.image(image, caption="📸 Foto Asli", use_column_width=True)
@@ -51,7 +47,7 @@ if mode == "📷 Ambil Foto Kamera":
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
 # ==========================
-# MODE UPLOAD
+# MODE UPLOAD GAMBAR
 # ==========================
 else:
     st.info("🖼️ Silakan upload gambar untuk deteksi.")
@@ -60,10 +56,14 @@ else:
     if uploaded_file is not None:
         image = Image.open(uploaded_file).convert("RGB")
 
+        # Prediksi YOLO
         results = model.predict(image, imgsz=640, conf=0.5)
         plotted = results[0].plot()
+
+        # Convert BGR → RGB
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
+        # Tampilkan berdampingan
         col1, col2 = st.columns(2)
         with col1:
             st.image(image, caption="🖼️ Gambar Asli", use_column_width=True)
