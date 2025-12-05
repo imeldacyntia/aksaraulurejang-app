@@ -1,7 +1,6 @@
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
-import numpy as np
 import cv2
 
 st.set_page_config(page_title="Deteksi Aksara", page_icon="🔍")
@@ -36,7 +35,8 @@ if mode is None:
 # ==========================
 if mode == "📷 Ambil Foto Kamera":
     st.info("📹 Ambil foto dengan kamera HP/laptop, lalu sistem akan mendeteksi aksara.")
-    camera_file = st.camera_input("Aktifkan Kamera dan Ambil Foto")
+
+    camera_file = st.camera_input("Aktifkan Kamera dan Ambil Foto", key="camera_image")
 
     if camera_file is not None:
         image = Image.open(camera_file).convert("RGB")
@@ -53,12 +53,22 @@ if mode == "📷 Ambil Foto Kamera":
         with col2:
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
+        # Tombol custom Hapus Foto
+        if st.button("🗑️ Hapus Foto / Hasil Deteksi"):
+            st.session_state["camera_image"] = None
+            st.experimental_rerun()
+
+
 # ==========================
 # MODE UPLOAD GAMBAR
 # ==========================
 else:
     st.info("🖼️ Silakan upload gambar untuk deteksi.")
-    uploaded_file = st.file_uploader("📂 Pilih gambar", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader(
+        "📂 Pilih gambar (JPG/JPEG/PNG)", 
+        type=["jpg", "jpeg", "png"],
+        key="upload_image"
+    )
 
     if uploaded_file is not None:
         image = Image.open(uploaded_file).convert("RGB")
@@ -74,3 +84,8 @@ else:
             st.image(image, caption="🖼️ Gambar Asli", use_column_width=True)
         with col2:
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
+
+        # Tombol custom Hapus Foto
+        if st.button("🗑️ Hapus Foto / Hasil Deteksi", key="clear_upload"):
+            st.session_state["upload_image"] = None
+            st.experimental_rerun()
