@@ -17,6 +17,15 @@ st.markdown(
 )
 
 # ==========================
+# Inisialisasi key dinamis
+# ==========================
+if "camera_key" not in st.session_state:
+    st.session_state["camera_key"] = 0
+
+if "upload_key" not in st.session_state:
+    st.session_state["upload_key"] = 0
+
+# ==========================
 # MODE PILIHAN (tidak default)
 # ==========================
 mode = st.radio(
@@ -36,7 +45,11 @@ if mode is None:
 if mode == "📷 Ambil Foto Kamera":
     st.info("📹 Ambil foto dengan kamera HP/laptop, lalu sistem akan mendeteksi aksara.")
 
-    camera_file = st.camera_input("Aktifkan Kamera dan Ambil Foto", key="camera_image")
+    # gunakan key dinamis supaya bisa di-reset total
+    camera_file = st.camera_input(
+        "Aktifkan Kamera dan Ambil Foto",
+        key=f"camera_image_{st.session_state['camera_key']}"
+    )
 
     if camera_file is not None:
         image = Image.open(camera_file).convert("RGB")
@@ -54,10 +67,10 @@ if mode == "📷 Ambil Foto Kamera":
         with col2:
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
-        # Tombol Hapus Foto / Hasil Deteksi (reset kamera)
+        # Tombol Hapus Foto / Hasil Deteksi
         if st.button("🗑️ Hapus Foto / Hasil Deteksi", key="clear_camera"):
-            if "camera_image" in st.session_state:
-                del st.session_state["camera_image"]
+            # ganti key → kamera dianggap komponen baru (foto & clear photo hilang)
+            st.session_state["camera_key"] += 1
             st.experimental_rerun()
 
 # ==========================
@@ -65,10 +78,11 @@ if mode == "📷 Ambil Foto Kamera":
 # ==========================
 else:
     st.info("🖼️ Silakan upload gambar untuk deteksi.")
+
     uploaded_file = st.file_uploader(
         "📂 Pilih gambar (JPG/JPEG/PNG)",
         type=["jpg", "jpeg", "png"],
-        key="upload_image"
+        key=f"upload_image_{st.session_state['upload_key']}"
     )
 
     if uploaded_file is not None:
@@ -87,8 +101,8 @@ else:
         with col2:
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
-        # Tombol Hapus Foto / Hasil Deteksi (reset upload)
+        # Tombol Hapus Foto / Hasil Deteksi
         if st.button("🗑️ Hapus Foto / Hasil Deteksi", key="clear_upload"):
-            if "upload_image" in st.session_state:
-                del st.session_state["upload_image"]
+            # ganti key → uploader dianggap komponen baru (file & preview hilang)
+            st.session_state["upload_key"] += 1
             st.experimental_rerun()
