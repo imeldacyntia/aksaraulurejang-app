@@ -17,10 +17,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# ==========================
+# MODE PILIHAN (tidak default)
+# ==========================
 mode = st.radio(
     "Pilih Mode Deteksi:",
-    ["📷 Ambil Foto Kamera", "🖼️ Upload Gambar"]
+    ["📷 Ambil Foto Kamera", "🖼️ Upload Gambar"],
+    index=None
 )
+
+# Jika user belum memilih mode → tampilkan pesan
+if mode is None:
+    st.warning("Silakan pilih mode deteksi terlebih dahulu.")
+    st.stop()
 
 # ==========================
 # MODE KAMERA
@@ -36,10 +45,8 @@ if mode == "📷 Ambil Foto Kamera":
         results = model.predict(image, imgsz=640, conf=0.5)
         plotted = results[0].plot()
 
-        # Convert BGR → RGB agar warna benar
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
-        # Tampilkan berdampingan
         col1, col2 = st.columns(2)
         with col1:
             st.image(image, caption="📸 Foto Asli", use_column_width=True)
@@ -60,10 +67,8 @@ else:
         results = model.predict(image, imgsz=640, conf=0.5)
         plotted = results[0].plot()
 
-        # Convert BGR → RGB
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
-        # Tampilkan berdampingan
         col1, col2 = st.columns(2)
         with col1:
             st.image(image, caption="🖼️ Gambar Asli", use_column_width=True)
