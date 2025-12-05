@@ -68,7 +68,7 @@ if mode == "📷 Ambil Foto Kamera":
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
         # Tombol Hapus Foto / Hasil Deteksi
-        if st.button("🗑️ Hapus Foto / Hasil Deteksi", key="clear_camera"):
+        if st.button("🗑️ Hapus Foto & Hasil Deteksi", key="clear_camera"):
             # ganti key → kamera dianggap komponen baru (foto & clear photo hilang)
             st.session_state["camera_key"] += 1
             st.experimental_rerun()
@@ -102,7 +102,8 @@ else:
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
         # Tombol Hapus Foto / Hasil Deteksi
-        if st.button("🗑️ Hapus Foto / Hasil Deteksi", key="clear_upload"):
+        if st.button("🗑️ Hapus Foto & Hasil Deteksi", key="clear_upload"):
             # ganti key → uploader dianggap komponen baru (file & preview hilang)
             st.session_state["upload_key"] += 1
             st.experimental_rerun()
+
