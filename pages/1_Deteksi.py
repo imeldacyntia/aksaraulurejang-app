@@ -45,6 +45,7 @@ if mode == "📷 Ambil Foto Kamera":
         results = model.predict(image, imgsz=640, conf=0.5)
         plotted = results[0].plot()
 
+        # BGR → RGB
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
         col1, col2 = st.columns(2)
@@ -53,11 +54,11 @@ if mode == "📷 Ambil Foto Kamera":
         with col2:
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
-        # Tombol custom Hapus Foto
-        if st.button("🗑️ Hapus Foto / Hasil Deteksi"):
-            st.session_state["camera_image"] = None
+        # Tombol Hapus Foto / Hasil Deteksi (reset kamera)
+        if st.button("🗑️ Hapus Foto / Hasil Deteksi", key="clear_camera"):
+            if "camera_image" in st.session_state:
+                del st.session_state["camera_image"]
             st.experimental_rerun()
-
 
 # ==========================
 # MODE UPLOAD GAMBAR
@@ -65,7 +66,7 @@ if mode == "📷 Ambil Foto Kamera":
 else:
     st.info("🖼️ Silakan upload gambar untuk deteksi.")
     uploaded_file = st.file_uploader(
-        "📂 Pilih gambar (JPG/JPEG/PNG)", 
+        "📂 Pilih gambar (JPG/JPEG/PNG)",
         type=["jpg", "jpeg", "png"],
         key="upload_image"
     )
@@ -77,6 +78,7 @@ else:
         results = model.predict(image, imgsz=640, conf=0.5)
         plotted = results[0].plot()
 
+        # BGR → RGB
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
         col1, col2 = st.columns(2)
@@ -85,7 +87,8 @@ else:
         with col2:
             st.image(plotted, caption="✅ Hasil Deteksi Aksara", use_column_width=True)
 
-        # Tombol custom Hapus Foto
+        # Tombol Hapus Foto / Hasil Deteksi (reset upload)
         if st.button("🗑️ Hapus Foto / Hasil Deteksi", key="clear_upload"):
-            st.session_state["upload_image"] = None
+            if "upload_image" in st.session_state:
+                del st.session_state["upload_image"]
             st.experimental_rerun()
