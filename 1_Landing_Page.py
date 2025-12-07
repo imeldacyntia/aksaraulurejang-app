@@ -6,40 +6,45 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown("<h1 style='text-align: center; color: #2E86C1;'>Deteksi Aksara Ulu Rejang</h1>", unsafe_allow_html=True)
+# === Judul Halaman ===
+st.markdown(
+    "<h1 style='text-align: center; color: #2E86C1;'>Deteksi Aksara Ulu Rejang</h1>",
+    unsafe_allow_html=True
+)
 
+# === Penjelasan Tentang Aksara (Diletakkan di Awal) ===
 st.markdown("""
-Selamat datang di aplikasi **Deteksi Gramfem Aksara Ulu Rejang** 👋  
+## Tentang Aksara Ulu Rejang
 
-Aplikasi ini dibuat untuk membantu mengenali dan mendeteksi grafem aksara Ulu Rejang secara otomatis.  
+Aksara Ulu Rejang adalah salah satu aksara tradisional penting di Provinsi Bengkulu 
+yang digunakan untuk mendokumentasikan adat, silsilah, dan tradisi masyarakat Rejang. 
+Termasuk dalam rumpun aksara Sumatera Selatan, aksara ini memiliki struktur grafem dan kaidah penulisan yang khas, 
+sebagaimana tampak pada manuskrip kuno yang ditulis pada kulit kayu, bambu, dan kertas.
 
-### ✨ Fitur:
-- 📷 Deteksi citra secara langsung menggunakan kamera
-- 🖼️ Deteksi citra melalui unggahan gambar 
+Saat ini, tingkat literasi Aksara Ulu Rejang menurun, penggunaannya hanya bertahan di kalangan terbatas 
+dan tidak lagi menjadi bagian dari pembelajaran generasi muda. 
+Aplikasi deteksi Aksara Ulu Rejang ini dikembangkan untuk membantu pengenalan dan pembacaan aksara secara otomatis, 
+sehingga dapat mendukung pelestarian dan pemanfaatan aksara tradisional ini di era digital.
 """)
 
-# --- Tombol langsung ke halaman deteksi ---
 st.markdown("---")
-st.markdown("### 🔎 Siap mencoba?")
-st.markdown("Mulailah mendeteksi aksara Ulu Rejang dari kamera atau gambar untuk mengenal lebih dekat warisan budaya kita. ✨")
 
-if st.button("🚀 Mulai Deteksi"):
-    st.switch_page("pages/1_Deteksi.py")  # sesuaikan dengan nama file halaman Deteksi
-
-# --- Tentang Aksara Rejang ---
-st.markdown("---")
-st.markdown("## 📖 Tentang Aksara Ulu Rejang")
-
+# === Penjelasan Singkat Aplikasi ===
 st.markdown("""
-Aksara Ulu Rejang merupakan salah satu warisan budaya Nusantara yang tumbuh dan berkembang di Bengkulu.  
-Aksara ini berbentuk silabis, di mana setiap huruf mewakili satu suku kata.  
-Sejak dahulu, aksara ini digunakan dalam manuskrip untuk mencatat sejarah, silsilah, hingga tradisi masyarakat Rejang.  
+## Tentang Aplikasi
 
-Keberadaan aplikasi ini memiliki manfaat penting, yaitu:  
-- 💡 Membantu masyarakat lebih mudah **mengenal dan mempelajari aksara Ulu Rejang** melalui teknologi modern.  
-- 📝 Dapat digunakan untuk mendeteksi **tulisan tangan di atas kertas** maupun **manuskrip yang sudah didigitalisasi dalam bentuk font**.  
-- 🌍 Berkontribusi pada **pelestarian kebudayaan** dengan memanfaatkan kecerdasan buatan untuk menjaga keberlanjutan aksara tradisional.  
-- 📚 Memberi nilai edukatif bagi generasi muda agar semakin peduli dan tertarik terhadap warisan budaya lokal.  
+Aplikasi ini dapat digunakan untuk mendeteksi grafem aksara Ulu Rejang melalui:
+- Deteksi citra menggunakan kamera
+- Deteksi citra melalui unggahan gambar
+
+Model yang digunakan dirancang untuk mengenali pola grafem baik dari tulisan tangan maupun hasil digitalisasi font.
 """)
 
+st.markdown("---")
 
+# === Tombol Mulai Deteksi ===
+st.markdown("## Siap Mencoba?")
+st.markdown("Mulai proses deteksi aksara Ulu Rejang melalui kamera atau gambar.")
+
+if st.button("Mulai Deteksi"):
+    st.switch_page("pages/1_Deteksi.py")
