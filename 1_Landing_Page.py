@@ -8,9 +8,10 @@ st.set_page_config(
 
 # === Judul Halaman ===
 st.markdown(
-    "<h1 style='text-align: center; color: #2E86C1;'>Deteksi Aksara Ulu Rejang</h1>",
+    "<h1 style='text-align: center; color: #2E86C1;'>Sistem Deteksi Grafem Aksara Ulu Rejang</h1>",
     unsafe_allow_html=True
 )
+
 
 # === Penjelasan Tentang Aksara (Diletakkan di Awal) ===
 st.markdown("""
@@ -48,3 +49,4 @@ st.markdown("Mulai proses deteksi aksara Ulu Rejang melalui kamera atau gambar."
 
 if st.button("Mulai Deteksi"):
     st.switch_page("pages/1_Deteksi.py")
+
