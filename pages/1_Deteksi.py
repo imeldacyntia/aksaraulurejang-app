@@ -17,13 +17,13 @@ st.markdown(
 )
 
 # ==========================
-# Inisialisasi key dinamis
+# Inisialisasi session state
 # ==========================
 if "camera_key" not in st.session_state:
-    st.session_state["camera_key"] = 0
+    st.session_state.camera_key = 0
 
 if "upload_key" not in st.session_state:
-    st.session_state["upload_key"] = 0
+    st.session_state.upload_key = 0
 
 # ==========================
 # MODE PILIHAN
@@ -46,7 +46,7 @@ if mode == "Ambil Foto Kamera":
 
     camera_file = st.camera_input(
         "Aktifkan kamera dan ambil foto",
-        key=f"camera_image_{st.session_state['camera_key']}"
+        key=f"camera_image_{st.session_state.camera_key}"
     )
 
     if camera_file is not None:
@@ -54,7 +54,6 @@ if mode == "Ambil Foto Kamera":
 
         results = model.predict(image, imgsz=640, conf=0.5)
         plotted = results[0].plot()
-
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
         col1, col2 = st.columns(2)
@@ -64,19 +63,19 @@ if mode == "Ambil Foto Kamera":
             st.image(plotted, caption="Hasil Deteksi Grafem", use_column_width=True)
 
         if st.button("Hapus Foto dan Hasil Deteksi", key="clear_camera"):
-            st.session_state["camera_key"] += 1
-            st.experimental_rerun()
+            st.session_state.camera_key += 1
+            st.rerun()
 
 # ==========================
 # MODE UPLOAD GAMBAR
 # ==========================
-else:
+elif mode == "Upload Gambar":
     st.info("Upload gambar berisi grafem Aksara Ulu Rejang untuk dilakukan deteksi.")
 
     uploaded_file = st.file_uploader(
         "Pilih gambar (JPG/JPEG/PNG)",
         type=["jpg", "jpeg", "png"],
-        key=f"upload_image_{st.session_state['upload_key']}"
+        key=f"upload_image_{st.session_state.upload_key}"
     )
 
     if uploaded_file is not None:
@@ -84,7 +83,6 @@ else:
 
         results = model.predict(image, imgsz=640, conf=0.5)
         plotted = results[0].plot()
-
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
         col1, col2 = st.columns(2)
@@ -94,5 +92,5 @@ else:
             st.image(plotted, caption="Hasil Deteksi Grafem", use_column_width=True)
 
         if st.button("Hapus Gambar dan Hasil Deteksi", key="clear_upload"):
-            st.session_state["upload_key"] += 1
-            st.experimental_rerun()
+            st.session_state.upload_key += 1
+            st.rerun()
