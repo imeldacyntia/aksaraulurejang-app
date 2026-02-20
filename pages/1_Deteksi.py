@@ -17,15 +17,6 @@ st.markdown(
 )
 
 # ==========================
-# Inisialisasi session state
-# ==========================
-if "camera_key" not in st.session_state:
-    st.session_state.camera_key = 0
-
-if "upload_key" not in st.session_state:
-    st.session_state.upload_key = 0
-
-# ==========================
 # MODE PILIHAN
 # ==========================
 mode = st.radio(
@@ -44,10 +35,7 @@ if mode is None:
 if mode == "Ambil Foto Kamera":
     st.info("Ambil foto menggunakan kamera kemudian sistem akan mendeteksi grafem pada gambar.")
 
-    camera_file = st.camera_input(
-        "Aktifkan kamera dan ambil foto",
-        key=f"camera_image_{st.session_state.camera_key}"
-    )
+    camera_file = st.camera_input("Aktifkan kamera dan ambil foto")
 
     if camera_file is not None:
         image = Image.open(camera_file).convert("RGB")
@@ -62,10 +50,6 @@ if mode == "Ambil Foto Kamera":
         with col2:
             st.image(plotted, caption="Hasil Deteksi Grafem", use_column_width=True)
 
-        if st.button("Hapus Foto dan Hasil Deteksi", key="clear_camera"):
-            st.session_state.camera_key += 1
-            st.rerun()
-
 # ==========================
 # MODE UPLOAD GAMBAR
 # ==========================
@@ -74,8 +58,7 @@ elif mode == "Upload Gambar":
 
     uploaded_file = st.file_uploader(
         "Pilih gambar (JPG/JPEG/PNG)",
-        type=["jpg", "jpeg", "png"],
-        key=f"upload_image_{st.session_state.upload_key}"
+        type=["jpg", "jpeg", "png"]
     )
 
     if uploaded_file is not None:
@@ -90,7 +73,3 @@ elif mode == "Upload Gambar":
             st.image(image, caption="Gambar Asli", use_column_width=True)
         with col2:
             st.image(plotted, caption="Hasil Deteksi Grafem", use_column_width=True)
-
-        if st.button("Hapus Gambar dan Hasil Deteksi", key="clear_upload"):
-            st.session_state.upload_key += 1
-            st.rerun()
