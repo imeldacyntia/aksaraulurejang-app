@@ -1,15 +1,16 @@
-streamlit==1.32.0
-pandas==2.2.2
+streamlit==1.32.2
+
 numpy==1.26.4
+pandas==2.2.2
+
 matplotlib==3.8.2
-seaborn==0.13.2
 plotly==5.24.1
 scikit-learn==1.4.2
 
-torch==2.2.2
-torchvision==0.17.2
+torch==2.2.0
+torchvision==0.17.0
 
-ultralytics==8.3.23
-opencv-python-headless==4.7.0.72
+ultralytics==8.2.0
 
+opencv-python-headless==4.9.0.80
 Pillow==10.2.0
