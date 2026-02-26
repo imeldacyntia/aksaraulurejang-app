@@ -45,7 +45,7 @@ def detect_image(image):
     try:
 
         results = model.predict(
-            image_resized,
+            image,
             imgsz=IMG_SIZE,
             conf=CONF_THRESHOLD,
             iou=IOU_THRESHOLD,
@@ -125,3 +125,4 @@ elif mode == "Upload Gambar":
 
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
+
