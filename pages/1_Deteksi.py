@@ -1,7 +1,6 @@
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
-import numpy as np
 import cv2
 
 # ==========================
@@ -28,37 +27,23 @@ st.markdown(
 )
 
 # ==========================
-# PARAMETER INFERENSI
-# ==========================
-IMG_SIZE = 640
-CONF_THRESHOLD = 0.5
-IOU_THRESHOLD = 0.45
-DEVICE = "cpu"  # gunakan "cpu" untuk deployment
-
-# ==========================
 # FUNGSI DETEKSI
 # ==========================
 def detect_image(image):
-    """
-    Melakukan inferensi YOLO pada gambar
-    """
     try:
-        # Resize agar konsisten 640x640
-        image_resized = image.resize((IMG_SIZE, IMG_SIZE))
-
         results = model.predict(
-            image_resized,
-            imgsz=IMG_SIZE,
-            conf=CONF_THRESHOLD,
-            iou=IOU_THRESHOLD,
-            device=DEVICE,
+            image,
+            imgsz=640,      # <-- ditulis langsung 640
+            conf=0.5,
+            iou=0.45,
+            device="cpu",
             verbose=False
         )
 
         plotted = results[0].plot()
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
-        return image_resized, plotted
+        return image, plotted
 
     except Exception as e:
         st.error(f"Terjadi kesalahan saat deteksi: {e}")
@@ -123,8 +108,7 @@ elif mode == "Upload Gambar":
             col1, col2 = st.columns(2)
 
             with col1:
-                st.image(original, caption="Gambar Asli (Resized 640x640)", use_column_width=True)
+                st.image(original, caption="Gambar Asli", use_column_width=True)
 
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
-
