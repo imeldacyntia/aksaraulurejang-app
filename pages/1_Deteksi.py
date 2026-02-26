@@ -43,9 +43,11 @@ def detect_image(image):
     Melakukan inferensi YOLO pada gambar
     """
     try:
+        # Resize agar konsisten 640x640
+        image_resized = image.resize((IMG_SIZE, IMG_SIZE))
 
         results = model.predict(
-            image,
+            image_resized,
             imgsz=IMG_SIZE,
             conf=CONF_THRESHOLD,
             iou=IOU_THRESHOLD,
@@ -125,4 +127,3 @@ elif mode == "Upload Gambar":
 
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
-
