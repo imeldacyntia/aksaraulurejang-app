@@ -96,7 +96,7 @@ if mode == "Ambil Foto Kamera":
             col1, col2 = st.columns(2)
 
             with col1:
-                st.image(original, caption="Foto Asli (Resized 640x640)", use_column_width=True)
+                st.image(original, caption="Foto Asli", use_column_width=True)
 
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
@@ -127,3 +127,4 @@ elif mode == "Upload Gambar":
 
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
+
