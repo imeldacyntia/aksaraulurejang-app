@@ -123,7 +123,7 @@ elif mode == "Upload Gambar":
             col1, col2 = st.columns(2)
 
             with col1:
-                st.image(original, caption="Gambar Asli (Resized 640x640)", use_column_width=True)
+                st.image(original, caption="Gambar Asli", use_column_width=True)
 
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
