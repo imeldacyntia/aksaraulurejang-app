@@ -18,6 +18,9 @@ st.set_page_config(
 if "camera_key" not in st.session_state:
     st.session_state["camera_key"] = 0
 
+if "upload_key" not in st.session_state:
+    st.session_state["upload_key"] = 0
+
 # ==========================
 # LOAD MODEL (CACHE)
 # ==========================
@@ -103,7 +106,6 @@ if mode == "Ambil Foto Kamera":
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
 
-            # Tombol reset kamera
             if st.button("Hapus Foto & Hasil Deteksi", key="clear_camera"):
                 st.session_state["camera_key"] += 1
                 st.rerun()
@@ -117,7 +119,8 @@ elif mode == "Upload Gambar":
 
     uploaded_file = st.file_uploader(
         "Pilih gambar (JPG/JPEG/PNG)",
-        type=["jpg", "jpeg", "png"]
+        type=["jpg", "jpeg", "png"],
+        key=f"upload_{st.session_state['upload_key']}"  
     )
 
     if uploaded_file is not None:
@@ -133,6 +136,6 @@ elif mode == "Upload Gambar":
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
 
-            # Tombol reset upload
             if st.button("Hapus Foto & Hasil Deteksi", key="clear_upload"):
+                st.session_state["upload_key"] += 1  
                 st.rerun()
