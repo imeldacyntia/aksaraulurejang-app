@@ -1,7 +1,6 @@
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
-import numpy as np
 import cv2
 
 # ==========================
@@ -12,6 +11,12 @@ st.set_page_config(
     page_icon="📖",
     layout="wide"
 )
+
+# ==========================
+# INIT SESSION STATE
+# ==========================
+if "camera_key" not in st.session_state:
+    st.session_state["camera_key"] = 0
 
 # ==========================
 # LOAD MODEL (CACHE)
@@ -33,17 +38,13 @@ st.markdown(
 IMG_SIZE = 640
 CONF_THRESHOLD = 0.5
 IOU_THRESHOLD = 0.45
-DEVICE = "cpu"  # gunakan "cpu" untuk deployment
+DEVICE = "cpu"
 
 # ==========================
 # FUNGSI DETEKSI
 # ==========================
 def detect_image(image):
-    """
-    Melakukan inferensi YOLO pada gambar
-    """
     try:
-        # Resize agar konsisten 640x640
         image_resized = image.resize((IMG_SIZE, IMG_SIZE))
 
         results = model.predict(
@@ -63,7 +64,6 @@ def detect_image(image):
     except Exception as e:
         st.error(f"Terjadi kesalahan saat deteksi: {e}")
         return None, None
-
 
 # ==========================
 # MODE PILIHAN
@@ -85,11 +85,13 @@ if mode == "Ambil Foto Kamera":
 
     st.info("Ambil foto menggunakan kamera kemudian sistem akan mendeteksi grafem pada gambar.")
 
-    camera_file = st.camera_input("Aktifkan kamera dan ambil foto")
+    camera_file = st.camera_input(
+        "Aktifkan kamera dan ambil foto",
+        key=f"camera_{st.session_state['camera_key']}"
+    )
 
     if camera_file is not None:
         image = Image.open(camera_file).convert("RGB")
-
         original, detected = detect_image(image)
 
         if original is not None:
@@ -101,11 +103,10 @@ if mode == "Ambil Foto Kamera":
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
 
-            # Tombol Hapus Foto / Hasil Deteksi
+            # Tombol reset kamera
             if st.button("Hapus Foto & Hasil Deteksi", key="clear_camera"):
-                # ganti key → kamera dianggap komponen baru (foto & clear photo hilang)
                 st.session_state["camera_key"] += 1
-                st.experimental_rerun()
+                st.rerun()
 
 # ==========================
 # MODE UPLOAD GAMBAR
@@ -121,7 +122,6 @@ elif mode == "Upload Gambar":
 
     if uploaded_file is not None:
         image = Image.open(uploaded_file).convert("RGB")
-
         original, detected = detect_image(image)
 
         if original is not None:
@@ -133,8 +133,6 @@ elif mode == "Upload Gambar":
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
 
-            # Tombol Hapus Foto / Hasil Deteksi
-            if st.button("Hapus Foto & Hasil Deteksi", key="clear_camera"):
-                # ganti key → kamera dianggap komponen baru (foto & clear photo hilang)
-                st.session_state["camera_key"] += 1
-                st.experimental_rerun()
+            # Tombol reset upload
+            if st.button("Hapus Foto & Hasil Deteksi", key="clear_upload"):
+                st.rerun()
