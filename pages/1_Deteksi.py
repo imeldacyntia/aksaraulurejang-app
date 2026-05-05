@@ -101,6 +101,11 @@ if mode == "Ambil Foto Kamera":
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
 
+            # Tombol Hapus Foto / Hasil Deteksi
+            if st.button("Hapus Foto & Hasil Deteksi", key="clear_camera"):
+                # ganti key → kamera dianggap komponen baru (foto & clear photo hilang)
+                st.session_state["camera_key"] += 1
+                st.experimental_rerun()
 
 # ==========================
 # MODE UPLOAD GAMBAR
@@ -127,3 +132,9 @@ elif mode == "Upload Gambar":
 
             with col2:
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
+
+            # Tombol Hapus Foto / Hasil Deteksi
+            if st.button("Hapus Foto & Hasil Deteksi", key="clear_camera"):
+                # ganti key → kamera dianggap komponen baru (foto & clear photo hilang)
+                st.session_state["camera_key"] += 1
+                st.experimental_rerun()
