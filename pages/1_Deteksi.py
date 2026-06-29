@@ -77,7 +77,7 @@ Sistem tidak menemukan grafem Aksara Ulu Rejang pada gambar yang diunggah.
 **Kemungkinan penyebab:**
 - Gambar bukan merupakan grafem Aksara Ulu Rejang.
 - Posisi pengambilan gambar terlalu miring.
-- Kamera belum berada pada posisi tegak lurus (90°) terhadap grafem.
+- Kamera belum berada pada posisi tegak lurus terhadap grafem.
 - Pencahayaan kurang memadai.
 - Grafem terlihat buram atau tidak utuh.
 
