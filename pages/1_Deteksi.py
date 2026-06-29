@@ -59,6 +59,24 @@ def detect_image(image):
             verbose=False
         )
 
+        # ==========================
+        # CEK HASIL DETEKSI
+        # ==========================
+        if len(results[0].boxes) == 0:
+            st.toast("⚠️ Grafem tidak terdeteksi.", icon="⚠️")
+
+            st.warning("""
+### Grafem tidak terdeteksi
+
+Pastikan bahwa:
+
+- Gambar merupakan **grafem Aksara Ulu Rejang**.
+- Grafem terlihat jelas dan tidak buram.
+- Pencahayaan cukup.
+- Posisi grafem tidak terpotong.
+- Jarak pengambilan gambar tidak terlalu jauh maupun terlalu dekat.
+""")
+
         plotted = results[0].plot()
         plotted = cv2.cvtColor(plotted, cv2.COLOR_BGR2RGB)
 
@@ -120,7 +138,7 @@ elif mode == "Upload Gambar":
     uploaded_file = st.file_uploader(
         "Pilih gambar (JPG/JPEG/PNG)",
         type=["jpg", "jpeg", "png"],
-        key=f"upload_{st.session_state['upload_key']}"  
+        key=f"upload_{st.session_state['upload_key']}"
     )
 
     if uploaded_file is not None:
@@ -137,5 +155,5 @@ elif mode == "Upload Gambar":
                 st.image(detected, caption="Hasil Deteksi Grafem", use_column_width=True)
 
             if st.button("Hapus Foto & Hasil Deteksi", key="clear_upload"):
-                st.session_state["upload_key"] += 1  
+                st.session_state["upload_key"] += 1
                 st.rerun()
