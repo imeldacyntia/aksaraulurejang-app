@@ -59,17 +59,17 @@ def detect_image(image):
             verbose=False
         )
 
-# ==========================
-# CEK HASIL DETEKSI
-# ==========================
-if len(results[0].boxes) == 0:
+        # ==========================
+        # CEK HASIL DETEKSI
+        # ==========================
+        if len(results[0].boxes) == 0:
 
-    st.toast(
-        "⚠️ Grafem Aksara Ulu Rejang tidak terdeteksi.",
-        icon="⚠️"
-    )
+            st.toast(
+                "⚠️ Grafem Aksara Ulu Rejang tidak terdeteksi.",
+                icon="⚠️"
+            )
 
-    st.warning("""
+            st.warning("""
 ### ⚠️ Grafem Aksara Ulu Rejang tidak terdeteksi
 
 Sistem tidak menemukan grafem Aksara Ulu Rejang pada gambar yang diunggah.
@@ -93,7 +93,6 @@ Silakan gunakan gambar grafem Aksara Ulu Rejang dengan posisi kamera tegak lurus
     except Exception as e:
         st.error(f"Terjadi kesalahan saat deteksi: {e}")
         return None, None
-
 # ==========================
 # MODE PILIHAN
 # ==========================
