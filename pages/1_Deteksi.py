@@ -82,7 +82,7 @@ Sistem tidak menemukan grafem Aksara Ulu Rejang pada gambar yang diunggah.
 - Grafem terlihat buram atau tidak utuh.
 
 **Saran:**
-Silakan gunakan gambar grafem Aksara Ulu Rejang dengan posisi kamera tegak lurus (90°), pencahayaan yang cukup, serta pastikan seluruh grafem terlihat jelas sebelum melakukan deteksi.
+Silakan gunakan gambar grafem Aksara Ulu Rejang dengan posisi kamera tegak lurus, pencahayaan yang cukup, serta pastikan seluruh grafem terlihat jelas sebelum melakukan deteksi.
 """)
 
         plotted = results[0].plot()
